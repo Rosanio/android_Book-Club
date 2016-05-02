@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.guest.bookclub.Constants;
 import com.example.guest.bookclub.R;
@@ -27,7 +28,7 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, AddCategoryFragment.AddCategoryDialogListener {
     @Bind(R.id.chooseTopicButton) Button mChooseTopicButton;
     @Bind(R.id.chooseTopicSpinner) Spinner mChooseTopicSpinner;
     @Bind(R.id.recentPostsRecyclerView) RecyclerView mRecentPostsRecyclerView;
@@ -83,6 +84,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         addCategoryDialogFragment.show(fm, "fragment_add_category");
     }
 
+    @Override
+    public void onFinishEditDialog(String inputText){
+        Toast.makeText(this, "new category: " + inputText, Toast.LENGTH_SHORT).show();
+    }
+
 
     private void setUpFirebaseQuery(){
         String location = mFirebaseMessagesRef.toString();
@@ -113,6 +119,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             }
         });
-
     }
 }
