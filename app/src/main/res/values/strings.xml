@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Book Club</string>
+    <string-array name="categories">
+        <item>Fiction</item>
+        <item>Non-fiction</item>
+        <item>History</item>
+        <item>Science Fiction</item>
+        <item>Popular Science</item>
+        <item>Mystery</item>
+        <item>True Crime</item>
+        <item>Fantasy</item>
+        <item>Travel</item>
+        <item>Biography</item>
+        <item>Literature</item>
+        <item>Horror</item>
+        <item>Romance</item>
+        <item>Comedy</item>
+    </string-array>
+</resources>
