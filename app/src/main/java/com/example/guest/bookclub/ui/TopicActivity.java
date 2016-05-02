@@ -63,6 +63,9 @@ public class TopicActivity extends AppCompatActivity implements View.OnClickList
                 Intent intent = new Intent(TopicActivity.this, NewPostActivity.class);
                 intent.putExtra("category", mCategory);
                 startActivity(intent);
+                break;
+            default:
+                break;
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.example.guest.bookclub.ui;
 
 import android.content.Intent;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -26,10 +27,11 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     @Bind(R.id.chooseTopicButton) Button mChooseTopicButton;
     @Bind(R.id.chooseTopicSpinner) Spinner mChooseTopicSpinner;
     @Bind(R.id.recentPostsRecyclerView) RecyclerView mRecentPostsRecyclerView;
+    @Bind(R.id.newCategoryButton) Button mNewCategoryButton;
 
     private Query mQuery;
     private Firebase mFirebaseMessagesRef;
@@ -48,21 +50,39 @@ public class MainActivity extends AppCompatActivity {
         mFirebaseMessagesRef = new Firebase(Constants.FIREBASE_URL_MESSAGES);
         mFirebaseCategoriesRef = new Firebase(Constants.FIREBASE_URL_CATEGORIES);
 
-        mChooseTopicButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String selection = mChooseTopicSpinner.getSelectedItem().toString();
-                Intent intent = new Intent(MainActivity.this, TopicActivity.class);
-                intent.putExtra("selection", selection);
-                startActivity(intent);
-            }
-        });
+        mChooseTopicButton.setOnClickListener(this);
+        mNewCategoryButton.setOnClickListener(this);
 
         setUpSpinner();
 
         setUpFirebaseQuery();
         setUpRecyclerView();
     }
+
+    @Override
+    public void onClick(View v){
+        switch(v.getId()){
+            case R.id.chooseTopicButton:
+                String selection = mChooseTopicSpinner.getSelectedItem().toString();
+                Intent intent = new Intent(MainActivity.this, TopicActivity.class);
+                intent.putExtra("selection", selection);
+                startActivity(intent);
+                break;
+            case R.id.newCategoryButton:
+                showNewCategoryDialog();
+                break;
+            default:
+                break;
+
+        }
+    }
+
+    private void showNewCategoryDialog(){
+        FragmentManager fm = getSupportFragmentManager();
+        AddCategoryFragment addCategoryDialogFragment = AddCategoryFragment.newInstance("Add New Category:");
+        addCategoryDialogFragment.show(fm, "fragment_add_category");
+    }
+
 
     private void setUpFirebaseQuery(){
         String location = mFirebaseMessagesRef.toString();
