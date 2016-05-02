@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -14,8 +15,13 @@ import com.example.guest.bookclub.Constants;
 import com.example.guest.bookclub.R;
 import com.example.guest.bookclub.adapters.FirebaseMessageListAdapter;
 import com.example.guest.bookclub.models.Message;
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
+import com.firebase.client.ValueEventListener;
+
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -27,7 +33,9 @@ public class MainActivity extends AppCompatActivity {
 
     private Query mQuery;
     private Firebase mFirebaseMessagesRef;
+    private Firebase mFirebaseCategoriesRef;
     private FirebaseMessageListAdapter mAdapter;
+    public ArrayList<String> mCategories = new ArrayList<>();
 
 
 
@@ -37,9 +45,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.categories, R.layout.white_text_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mChooseTopicSpinner.setAdapter(adapter);
+        mFirebaseMessagesRef = new Firebase(Constants.FIREBASE_URL_MESSAGES);
+        mFirebaseCategoriesRef = new Firebase(Constants.FIREBASE_URL_CATEGORIES);
 
         mChooseTopicButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mFirebaseMessagesRef = new Firebase(Constants.FIREBASE_URL_MESSAGES);
+        setUpSpinner();
 
         setUpFirebaseQuery();
         setUpRecyclerView();
@@ -66,5 +73,26 @@ public class MainActivity extends AppCompatActivity {
         mAdapter = new FirebaseMessageListAdapter(mQuery, Message.class);
         mRecentPostsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecentPostsRecyclerView.setAdapter(mAdapter);
+    }
+
+    private void setUpSpinner(){
+        mFirebaseCategoriesRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                mCategories.clear();
+                for(DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                    mCategories.add(postSnapshot.getValue().toString());
+                }
+                ArrayAdapter adapter = new ArrayAdapter(MainActivity.this, R.layout.white_text_spinner_item, mCategories);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                mChooseTopicSpinner.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+
     }
 }
