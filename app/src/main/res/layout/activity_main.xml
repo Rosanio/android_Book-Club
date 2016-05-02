@@ -74,14 +74,30 @@
         </LinearLayout>
 
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Explore"
-            android:id="@+id/chooseTopicButton"
-            android:layout_gravity="center_horizontal"
-            android:background="@color/colorAccent"
-            android:textColor="@color/colorTextIcons" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Explore"
+                android:id="@+id/chooseTopicButton"
+                android:background="@color/colorAccent"
+                android:textColor="@color/colorTextIcons"
+                android:layout_gravity="right"
+                android:layout_weight="0.75" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New Category"
+                android:id="@+id/newCategoryButton"
+                android:layout_weight="0.25"
+                android:background="@color/colorPrimaryDark"
+                android:textColor="@color/colorPrimaryLight" />
+        </LinearLayout>
 
 
     </LinearLayout>
