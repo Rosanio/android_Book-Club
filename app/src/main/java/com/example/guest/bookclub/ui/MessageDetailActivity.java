@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
@@ -12,9 +13,11 @@ import android.widget.Toast;
 
 import com.example.guest.bookclub.Constants;
 import com.example.guest.bookclub.R;
+import com.example.guest.bookclub.adapters.FirebaseCommentListAdapter;
 import com.example.guest.bookclub.models.Comment;
 import com.example.guest.bookclub.models.Message;
 import com.firebase.client.Firebase;
+import com.firebase.client.Query;
 
 import org.parceler.Parcels;
 
@@ -32,6 +35,8 @@ public class MessageDetailActivity extends AppCompatActivity implements AddComme
     @Bind(R.id.newCommentButton) Button mNewCommentButton;
 
     private Firebase mFirebaseCommentsRef;
+    private Query mQuery;
+    private FirebaseCommentListAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +60,9 @@ public class MessageDetailActivity extends AppCompatActivity implements AddComme
                 showNewCommentDialog();
             }
         });
+
+        setUpFirebaseQuery();
+        setUpRecyclerView();
     }
 
     private void showNewCommentDialog(){
@@ -72,5 +80,17 @@ public class MessageDetailActivity extends AppCompatActivity implements AddComme
         newCommentRef.setValue(newComment);
         Toast.makeText(this, "comment author: " + authorText + " body: " + contentText, Toast.LENGTH_SHORT).show();
     }
+
+    private void setUpFirebaseQuery() {
+        mQuery = mFirebaseCommentsRef.orderByChild("parentMessageID").equalTo(mMessage.getPushId());
+    }
+
+    private void setUpRecyclerView() {
+        mAdapter = new FirebaseCommentListAdapter(mQuery, Comment.class);
+        mCommentsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mCommentsRecyclerView.setAdapter(mAdapter);
+    }
+
+
 }
 // TODO: create dialog for adding comment, save button, retrieve comments for message specifically and display via adapter

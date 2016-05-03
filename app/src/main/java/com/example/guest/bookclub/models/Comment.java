@@ -39,7 +39,7 @@ public class Comment {
         this.pushID = pushID;
     }
 
-    public String getParentMessage() {
+    public String getParentMessageID() {
         return parentMessageID;
     }
 
