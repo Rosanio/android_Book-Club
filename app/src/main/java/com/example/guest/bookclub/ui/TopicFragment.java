@@ -52,7 +52,6 @@ public class TopicFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_topic, container, false);
         ButterKnife.bind(this, view);
         mFirebaseMessagesRef = new Firebase(Constants.FIREBASE_URL_MESSAGES);
-        Log.v("topic fragement", "setting up  recyclerview");
         setUpFirebaseQuery();
         setUpRecyclerView();
         return view;

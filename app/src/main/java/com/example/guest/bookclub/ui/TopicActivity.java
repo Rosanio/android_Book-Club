@@ -31,6 +31,7 @@ public class TopicActivity extends AppCompatActivity implements View.OnClickList
     @Bind(R.id.newPostButton) Button mNewPostButton;
     @Bind(R.id.viewPager) ViewPager mViewPager;
     private CategoryPagerAdapter adapterViewPager;
+    int index;
     String mCategory;
     ArrayList<String> mCategories = new ArrayList<>();
     private Query mQuery;
@@ -46,7 +47,7 @@ public class TopicActivity extends AppCompatActivity implements View.OnClickList
         ButterKnife.bind(this);
 
         Intent intent = getIntent();
-        mCategory = intent.getStringExtra("selection");
+        //mCategory = intent.getStringExtra("selection");
 
         mNewPostButton.setOnClickListener(this);
 
@@ -57,10 +58,9 @@ public class TopicActivity extends AppCompatActivity implements View.OnClickList
                 mCategories.clear();
                 for(DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
                     mCategories.add(postSnapshot.getValue().toString());
-                    Log.v("category added: ", postSnapshot.getValue().toString());
                 }
                 int startingPosition = Integer.parseInt(getIntent().getStringExtra("position"));
-                Log.v("starting position: ", startingPosition + "");
+                Log.v("startingPosition: ", "" + startingPosition);
                 adapterViewPager = new CategoryPagerAdapter(getSupportFragmentManager(), mCategories);
                 mViewPager.setAdapter(adapterViewPager);
                 mViewPager.setCurrentItem(startingPosition);
@@ -91,8 +91,11 @@ public class TopicActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v){
         switch(v.getId()){
             case R.id.newPostButton:
+                index = mViewPager.getCurrentItem();
+                String category = mCategories.get(index);
                 Intent intent = new Intent(TopicActivity.this, NewPostActivity.class);
-                intent.putExtra("category", mCategory);
+                intent.putExtra("category", category);
+                intent.putExtra("position", index + "");
                 startActivity(intent);
                 break;
             default:

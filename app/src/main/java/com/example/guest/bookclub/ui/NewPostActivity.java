@@ -21,6 +21,7 @@ public class NewPostActivity extends AppCompatActivity {
     @Bind(R.id.contentEditText) EditText mContentEditText;
     @Bind(R.id.submitButton) Button mSubmitButton;
     String mCategory;
+    private int mPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +31,7 @@ public class NewPostActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         mCategory = intent.getStringExtra("category");
+        mPosition = Integer.parseInt(intent.getStringExtra("position"));
 
         mSubmitButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,7 +43,8 @@ public class NewPostActivity extends AppCompatActivity {
                 Firebase ref = new Firebase(Constants.FIREBASE_URL_MESSAGES);
                 ref.push().setValue(message);
                 Intent intent = new Intent(NewPostActivity.this, TopicActivity.class);
-                intent.putExtra("category", mCategory);
+                intent.putExtra("selection", mCategory);
+                intent.putExtra("position", mPosition+"");
                 startActivity(intent);
             }
         });

@@ -88,6 +88,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onFinishEditDialog(String inputText){
+        mFirebaseCategoriesRef.push().setValue(inputText);
         Toast.makeText(this, "new category: " + inputText, Toast.LENGTH_SHORT).show();
     }
 
