@@ -20,6 +20,7 @@ public class Message {
     public long datePosted;
     public String category;
     public List<Comment> comments;
+    String pushId;
 
 
     public Message(){
@@ -49,10 +50,12 @@ public class Message {
         return content;
     }
 
-    public CharSequence getDatePosted() {
+    public CharSequence showDatePostedPretty() {
         return DateUtils.getRelativeTimeSpanString(datePosted);
         //return DateFormat.getDateInstance().format(datePosted);
     }
+
+    public long getDatePosted(){ return datePosted; }
 
     public String getCategory() {
         return category;
@@ -60,6 +63,14 @@ public class Message {
 
     public List<Comment> getComments() {
         return comments;
+    }
+
+    public String getPushId() {
+        return pushId;
+    }
+
+    public void setPushId(String pushId) {
+        this.pushId = pushId;
     }
 
 }

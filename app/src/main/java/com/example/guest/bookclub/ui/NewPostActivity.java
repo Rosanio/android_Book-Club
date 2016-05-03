@@ -41,7 +41,10 @@ public class NewPostActivity extends AppCompatActivity {
                 String content = mContentEditText.getText().toString();
                 Message message = new Message(title, author, content, mCategory);
                 Firebase ref = new Firebase(Constants.FIREBASE_URL_MESSAGES);
-                ref.push().setValue(message);
+                Firebase newMessageRef = ref.push();
+                String pushID = newMessageRef.getKey();
+                message.setPushId(pushID);
+                newMessageRef.setValue(message);
                 Intent intent = new Intent(NewPostActivity.this, TopicActivity.class);
                 intent.putExtra("selection", mCategory);
                 intent.putExtra("position", mPosition+"");

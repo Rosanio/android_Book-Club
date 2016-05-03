@@ -16,33 +16,46 @@ public class Comment {
     public String author;
     public String content;
     public long datePosted;
-    public Message parentMessage;
+    public String parentMessageID;
+    public String pushID;
 
 
     public Comment(){
 
     }
 
-    public Message getParentMessage() {
-        return parentMessage;
+    public Comment(String author, String content, String parentMessageID){
+        this.author = author;
+        this.content = content;
+        this.datePosted = System.currentTimeMillis();
+        this.parentMessageID = parentMessageID;
+    }
+
+    public String getPushID() {
+        return pushID;
+    }
+
+    public void setPushID(String pushID) {
+        this.pushID = pushID;
+    }
+
+    public String getParentMessage() {
+        return parentMessageID;
     }
 
     public String getContent() {
         return content;
     }
 
-    public CharSequence getDatePosted() {
+    public CharSequence showDatePostedPretty() {
         return DateUtils.getRelativeTimeSpanString(datePosted);
     }
+
+    public long getDatePosted(){ return datePosted; }
 
     public String getAuthor() {
         return author;
     }
 
-    public Comment(String author, String content, Message parentMessage){
-        this.author = author;
-        this.content = content;
-        this.datePosted = System.currentTimeMillis();
-        this.parentMessage = parentMessage;
-    }
+
 }

@@ -5,16 +5,17 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.guest.bookclub.Constants;
 import com.example.guest.bookclub.R;
+import com.example.guest.bookclub.models.Comment;
 import com.example.guest.bookclub.models.Message;
+import com.firebase.client.Firebase;
 
-import org.parceler.Parcel;
 import org.parceler.Parcels;
 
 import butterknife.Bind;
@@ -30,6 +31,8 @@ public class MessageDetailActivity extends AppCompatActivity implements AddComme
     @Bind(R.id.commentsRecyclerView) RecyclerView mCommentsRecyclerView;
     @Bind(R.id.newCommentButton) Button mNewCommentButton;
 
+    private Firebase mFirebaseCommentsRef;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,9 +43,11 @@ public class MessageDetailActivity extends AppCompatActivity implements AddComme
         mMessage = Parcels.unwrap(intent.getParcelableExtra("message"));
         mTitleTextView.setText(mMessage.getTitle());
         mAuthorTextView.setText(mMessage.getPoster());
-        mDateTextView.setText(mMessage.getDatePosted());
+        mDateTextView.setText(mMessage.showDatePostedPretty());
         mTopicTextView.setText(mMessage.getCategory());
         mContentTextView.setText(mMessage.getContent());
+
+        mFirebaseCommentsRef = new Firebase(Constants.FIREBASE_URL_COMMENTS);
 
         mNewCommentButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,7 +65,11 @@ public class MessageDetailActivity extends AppCompatActivity implements AddComme
 
     @Override
     public void onFinishEditDialog(String authorText, String contentText){
-//        mFirebaseCommentsRef.push().setValue(inputText);
+        Comment newComment = new Comment(authorText, contentText, mMessage.getPushId());
+        Firebase newCommentRef = mFirebaseCommentsRef.push();
+        String pushID = newCommentRef.getKey();
+        newComment.setPushID(pushID);
+        newCommentRef.setValue(newComment);
         Toast.makeText(this, "comment author: " + authorText + " body: " + contentText, Toast.LENGTH_SHORT).show();
     }
 }
