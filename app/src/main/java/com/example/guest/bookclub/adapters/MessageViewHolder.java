@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.example.guest.bookclub.R;
 import com.example.guest.bookclub.models.Message;
+import com.example.guest.bookclub.ui.MessageDetailActivity;
 import com.squareup.picasso.Picasso;
 
 import org.parceler.Parcels;
@@ -38,11 +39,11 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                int itemPosition = getLayoutPosition();
-//                Intent intent = new Intent(mContext, MessageDetailActivity.class);
-//                intent.putExtra("position", itemPosition + "");
-//                intent.putExtra("messages", Parcels.wrap(mMessages));
-//                mContext.startActivity(intent);
+                int itemPosition = getLayoutPosition();
+                Intent intent = new Intent(mContext, MessageDetailActivity.class);
+                intent.putExtra("position", itemPosition + "");
+                intent.putExtra("messages", Parcels.wrap(mMessages));
+                mContext.startActivity(intent);
             }
         });
     }
