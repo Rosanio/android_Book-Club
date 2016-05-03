@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Bind(R.id.chooseTopicSpinner) Spinner mChooseTopicSpinner;
     @Bind(R.id.recentPostsRecyclerView) RecyclerView mRecentPostsRecyclerView;
     @Bind(R.id.newCategoryButton) Button mNewCategoryButton;
+    @Bind(R.id.pbLoading) ProgressBar mLoadingProgressBar;
 
     private Query mQuery;
     private Firebase mFirebaseMessagesRef;
@@ -47,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        mLoadingProgressBar.setVisibility(ProgressBar.VISIBLE);
 
         mFirebaseMessagesRef = new Firebase(Constants.FIREBASE_URL_MESSAGES);
         mFirebaseCategoriesRef = new Firebase(Constants.FIREBASE_URL_CATEGORIES);
@@ -102,12 +105,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mAdapter = new FirebaseMessageListAdapter(mQuery, Message.class);
         mRecentPostsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecentPostsRecyclerView.setAdapter(mAdapter);
+
     }
 
     private void setUpSpinner(){
         mFirebaseCategoriesRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                mLoadingProgressBar.setVisibility(ProgressBar.INVISIBLE);
                 mCategories.clear();
                 for(DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
                     mCategories.add(postSnapshot.getValue().toString());
