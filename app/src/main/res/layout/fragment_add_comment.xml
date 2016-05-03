@@ -1,0 +1,27 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.guest.bookclub.ui.AddCommentFragment"
+    android:gravity="center">
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/commentAuthorEditText"
+        android:imeOptions="actionNext"
+        android:inputType="text"
+        android:hint="Name" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:imeOptions="actionDone"
+        android:inputType="text"
+        android:id="@+id/commentContentEditText"
+        android:hint="Comment" />
+
+</LinearLayout>
+

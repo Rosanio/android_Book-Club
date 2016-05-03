@@ -22,15 +22,17 @@ import butterknife.ButterKnife;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AddCategoryFragment extends DialogFragment implements TextView.OnEditorActionListener {
-    @Bind(R.id.newCategoryEditText) EditText mNewCategoryEditText;
+public class AddCommentFragment extends DialogFragment implements TextView.OnEditorActionListener{
+    @Bind(R.id.commentAuthorEditText) EditText mAuthorEditText;
+    @Bind(R.id.commentContentEditText) EditText mContentEditText;
 
-    public interface AddCategoryDialogListener {
-        void onFinishEditDialog(String inputText);
+    public interface AddCommentDialogListener {
+        void onFinishEditDialog(String authorText, String contentText);
     }
 
-    public static AddCategoryFragment newInstance(String title){
-        AddCategoryFragment frag = new AddCategoryFragment();
+
+    public static AddCommentFragment newInstance(String title) {
+       AddCommentFragment frag = new AddCommentFragment();
         Bundle args = new Bundle();
         args.putString("title", title);
         frag.setArguments(args);
@@ -42,39 +44,33 @@ public class AddCategoryFragment extends DialogFragment implements TextView.OnEd
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
-        View view = inflater.inflate(R.layout.fragment_add_category, container, false);
+        View view = inflater.inflate(R.layout.fragment_add_comment, container, false);
 
         return view;
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState){
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-
-        String title = getArguments().getString("title", "Enter new category");
+        String title = getArguments().getString("title", "Leave a Comment");
         getDialog().setTitle(title);
-        mNewCategoryEditText.setOnEditorActionListener(this);
 
-        mNewCategoryEditText.requestFocus();
+        mContentEditText.setOnEditorActionListener(this);
+
+        mAuthorEditText.requestFocus();
         getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-
     }
 
     @Override
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-        if (EditorInfo.IME_ACTION_DONE == actionId) {
-            // Return input text back to activity through the implemented listener
-            AddCategoryDialogListener listener = (AddCategoryDialogListener) getActivity();
-            listener.onFinishEditDialog(mNewCategoryEditText.getText().toString());
-            // Close the dialog and return back to the parent activity
+        if(EditorInfo.IME_ACTION_DONE == actionId) {
+            AddCommentDialogListener listener = (AddCommentDialogListener) getActivity();
+            listener.onFinishEditDialog(mAuthorEditText.getText().toString(), mContentEditText.getText().toString());
             dismiss();
             return true;
         }
         return false;
     }
-
-
 
 }
