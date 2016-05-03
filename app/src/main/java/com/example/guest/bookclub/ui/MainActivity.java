@@ -65,7 +65,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch(v.getId()){
             case R.id.chooseTopicButton:
                 String selection = mChooseTopicSpinner.getSelectedItem().toString();
+                int itemPosition = mChooseTopicSpinner.getSelectedItemPosition();
                 Intent intent = new Intent(MainActivity.this, TopicActivity.class);
+                intent.putExtra("position", itemPosition + "");
                 intent.putExtra("selection", selection);
                 startActivity(intent);
                 break;
