@@ -1,5 +1,7 @@
 package com.example.guest.bookclub.models;
 
+import android.text.format.DateUtils;
+
 import org.parceler.Parcel;
 
 import java.text.DateFormat;
@@ -15,21 +17,23 @@ public class Message {
     public String title;
     public String poster;
     public String content;
-    public Date datePosted;
+    public long datePosted;
     public String category;
-//    public List<String> topics = new ArrayList<>();
+    public List<Comment> comments;
+
 
     public Message(){
 
     }
 
+
     public Message(String title, String poster, String content, String category){
         this.title = title;
         this.poster = poster;
         this.content = content;
-//        this.topics = topics;
-        this.datePosted = new Date();
+        this.datePosted = System.currentTimeMillis();
         this.category = category;
+        this.comments = new ArrayList<>();
 
     }
 
@@ -45,19 +49,17 @@ public class Message {
         return content;
     }
 
-    public String getDatePosted() {
-
-        return DateFormat.getDateInstance().format(datePosted);
+    public CharSequence getDatePosted() {
+        return DateUtils.getRelativeTimeSpanString(datePosted);
+        //return DateFormat.getDateInstance().format(datePosted);
     }
 
     public String getCategory() {
         return category;
     }
 
-//    public List<String> getTopics() {
-//        return topics;
-//    }
-
-
+    public List<Comment> getComments() {
+        return comments;
+    }
 
 }

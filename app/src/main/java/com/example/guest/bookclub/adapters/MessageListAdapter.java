@@ -14,30 +14,30 @@ import java.util.ArrayList;
 /**
  * Created by Guest on 5/2/16.
  */
-public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>{
-
-    private Context mContext;
-    private ArrayList<Message> mMessages = new ArrayList<>();
-
-    public MessageListAdapter(Context context, ArrayList<Message> messages) {
-        mContext = context;
-        mMessages = messages;
-    }
-
-    @Override
-    public MessageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.message_list_item, parent, false);
-        MessageViewHolder viewHolder = new MessageViewHolder(view, mMessages);
-        return viewHolder;
-    }
-
-    @Override
-    public void onBindViewHolder(MessageViewHolder holder, int position) {
-        holder.bindMessage(mMessages.get(position));
-    }
-
-    @Override
-    public int getItemCount() {
-        return mMessages.size();
-    }
-}
+//public class MessageListAdapter extends RecyclerView.Adapter<MessageViewHolder>{
+//
+//    private Context mContext;
+//    private ArrayList<Message> mMessages = new ArrayList<>();
+//
+//    public MessageListAdapter(Context context, ArrayList<Message> messages) {
+//        mContext = context;
+//        mMessages = messages;
+//    }
+//
+//    @Override
+//    public MessageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+//        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.message_list_item, parent, false);
+//        MessageViewHolder viewHolder = new MessageViewHolder(view, mMessages);
+//        return viewHolder;
+//    }
+//
+//    @Override
+//    public void onBindViewHolder(MessageViewHolder holder, int position) {
+//        holder.bindMessage(mMessages.get(position));
+//    }
+//
+//    @Override
+//    public int getItemCount() {
+//        return mMessages.size();
+//    }
+//}
