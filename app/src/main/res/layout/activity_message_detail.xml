@@ -40,8 +40,8 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="New Button"
-        android:id="@+id/button"
+        android:text="New Comment"
+        android:id="@+id/newCommentButton"
         android:layout_alignParentBottom="true"
         android:background="@color/colorAccent"
         android:textColor="@color/colorPrimaryLight" />
@@ -51,7 +51,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/dateTextView"
-        android:layout_above="@+id/button"
+        android:layout_above="@+id/newCommentButton"
         android:id="@+id/linearLayout">
 
         <ScrollView
@@ -82,7 +82,7 @@
             android:layout_height="match_parent"
             android:layout_below="@+id/contentScrollView"
             android:id="@+id/recyclerLayout"
-            android:layout_above="@+id/button"
+            android:layout_above="@+id/newCommentButton"
             android:layout_weight="0.5">
 
             <android.support.v7.widget.RecyclerView

@@ -30,6 +30,7 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
 
     private Context mContext;
     private ArrayList<Message> mMessages = new ArrayList<>();
+    private Message mMessage;
 
     public MessageViewHolder(View itemView, ArrayList<Message> messages) {
         super(itemView);
@@ -40,9 +41,9 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View v) {
                 int itemPosition = getLayoutPosition();
+                mMessage = mMessages.get(itemPosition);
                 Intent intent = new Intent(mContext, MessageDetailActivity.class);
-                intent.putExtra("position", itemPosition + "");
-                intent.putExtra("messages", Parcels.wrap(mMessages));
+                intent.putExtra("message", Parcels.wrap(mMessage));
                 mContext.startActivity(intent);
             }
         });
